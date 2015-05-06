@@ -4,7 +4,7 @@ require 'fileutils'
 
 base_path = File.join(File.dirname(__FILE__), '..')
 vendor    = File.join(base_path, 'vendor')
-tarfile   = File.join(vendor, 'pdfk.tar.gz')
+tarfile   = File.expand_path File.join(vendor, 'pdftk.tar.gz')
 
 Dir.chdir vendor do
   %x{tar -xz -f #{tarfile}}
