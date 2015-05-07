@@ -2,10 +2,16 @@
 
 require 'fileutils'
 
+build_dir = ARGV[0]
 base_path = File.join(File.dirname(__FILE__), '..')
 vendor    = File.join(base_path, 'vendor')
 tarfile   = File.expand_path File.join(vendor, 'pdftk.tar.gz')
+vendor_build_dir = File.join(build_dir, 'vendor')
+pdftk_dir = File.join(vendor_build_dir, 'pdftk')
 
-Dir.chdir vendor do
+FileUtils.mkdir_p vendor_build_dir
+FileUtils.mkdir_p pdftk_dir
+
+Dir.chdir pdftk_dir do
   %x{tar -xz -f #{tarfile}}
 end
