@@ -2,12 +2,15 @@
 
 set -e
 
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+
 BUILD_DIR=$1
 CACHE_DIR=$2
 
 echo "-----> Extracting pdftk binaries"
 mkdir -p $BUILD_DIR/vendor/pdftk
-tar zxf ../vendor/pdftk.tar.gz -C $BUILD_DIR/vendor/pdftk
+tar zxf $SCRIPTPATH/../vendor/pdftk.tar.gz -C $BUILD_DIR/vendor/pdftk
 
 echo "-----> Linking pdftk binaries"
 mkdir -p $BUILD_DIR/bin
