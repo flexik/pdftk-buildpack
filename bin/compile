@@ -8,11 +8,18 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-echo "-----> Extracting pdftk binaries"
+echo "-----> PDFtk: Extracting binaries"
 mkdir -p $BUILD_DIR/vendor/pdftk
 tar zxf $SCRIPTPATH/../vendor/pdftk.tar.gz -C $BUILD_DIR/vendor/pdftk
 
-echo "-----> Linking pdftk binaries"
+echo "-----> PDFtk: Linking binaries"
 mkdir -p $BUILD_DIR/bin
 cd $BUILD_DIR/bin
 ln -s ../vendor/pdftk/bin/* .
+
+echo "-----> PDFtk: Setting LD_LIBRARY_PATH"
+PROFILE_PATH="$BUILD_DIR/.profile.d/pdftk.sh"
+mkdir -p $(dirname $PROFILE_PATH)
+
+# configure LD_LIBRARY_PATH to include dependencies
+echo 'export LD_LIBRARY_PATH="$HOME/vendor/pdftk/lib:$LD_LIBRARY_PATH"' >> $PROFILE_PATH
