@@ -1,17 +1,15 @@
-#!/usr/bin/env ruby
+#!/bin/sh
 
-require 'fileutils'
+set -e
 
-build_dir = ARGV[0]
-base_path = File.join(File.dirname(__FILE__), '..')
-vendor    = File.join(base_path, 'vendor')
-tarfile   = File.expand_path File.join(vendor, 'pdftk.tar.gz')
-vendor_build_dir = File.join(build_dir, 'vendor')
-pdftk_dir = File.join(vendor_build_dir, 'pdftk')
+BUILD_DIR=$1
+CACHE_DIR=$2
 
-FileUtils.mkdir_p vendor_build_dir
-FileUtils.mkdir_p pdftk_dir
+echo "-----> Extracting pdftk binaries"
+mkdir -p $BUILD_DIR/vendor/pdftk
+tar zxf ../vendor/pdftk.tar.gz -C $BUILD_DIR/vendor/pdftk
 
-Dir.chdir pdftk_dir do
-  %x{tar -xz -f #{tarfile}}
-end
+echo "-----> Linking pdftk binaries"
+mkdir -p $BUILD_DIR/bin
+cd $BUILD_DIR/bin
+ln -s ../vendor/pdftk/bin/* .
